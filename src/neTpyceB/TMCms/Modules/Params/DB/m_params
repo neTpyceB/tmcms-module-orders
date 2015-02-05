@@ -1,0 +1,1 @@
+CREATE TABLE `m_params` (  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,  `title` int(10) unsigned NOT NULL COMMENT 'dstring',  `type` enum('text','checkbox','select') NOT NULL DEFAULT 'text',  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8
