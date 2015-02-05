@@ -1,10 +1,10 @@
 <?
-namespace neTpyceB\TMCms\Modules\Params;
+namespace neTpyceB\TMCms\Modules\Orders;
 
 defined('INC') or exit;
 
 
-class CmsParams
+class Orders
 {
     public function _default() {
 

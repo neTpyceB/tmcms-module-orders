@@ -1,0 +1,12 @@
+CREATE TABLE `m_orders_items` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `order_id` int(10) unsigned NOT NULL,
+ `item_type` varchar(255) NOT NULL,
+ `item_id` int(10) unsigned NOT NULL,
+ `amount` int(10) unsigned NOT NULL,
+ `saved_item_data` text NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `cart_id` (`order_id`),
+ KEY `item_id` (`item_id`),
+ CONSTRAINT `m_orders_id_item` FOREIGN KEY (`order_id`) REFERENCES `m_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

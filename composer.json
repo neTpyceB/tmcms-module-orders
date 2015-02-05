@@ -1,8 +1,8 @@
 {
-  "name": "neTpyceB/TMCms-module-params",
+  "name": "neTpyceB/TMCms-module-orders",
   "type": "library",
-  "description": "Module Parameters for TMCms",
-  "keywords": ["module", "params"],
+  "description": "Module Orders for TMCms",
+  "keywords": ["module", "orders"],
   "homepage": "http://devp.lv/",
   "license": "proprietary",
   "authors": [
