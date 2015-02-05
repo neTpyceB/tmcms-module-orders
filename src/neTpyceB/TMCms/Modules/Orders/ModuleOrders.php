@@ -2,6 +2,7 @@
 namespace neTpyceB\TMCms\Modules\Orders;
 
 use neTpyceB\TMCms\Modules\IModule;
+use neTpyceB\TMCms\Modules\Orders\Object\Order;
 use neTpyceB\TMCms\Modules\Rating\Object\Rating;
 use neTpyceB\TMCms\Modules\Rating\Object\RatingCollection;
 
