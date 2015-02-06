@@ -90,7 +90,7 @@ ORDER BY `o`.`date_created` DESC
             $form->addField(
                 Converter::symb2Ttl($data['multi_lng_data']['title'][LNG]),
                 CmsHtml::getInstance('item_' . $item->getId())->value(
-                    htmlspecialchars($item->getAmount() .' * '. ($data['price_special'] > 0 ? $data['price_special'] : $data['price']) . ' = ' . ($item->getAmount() * $data['price_special'] > 0 ? $data['price_special'] : $data['price']) , ENT_QUOTES)
+                    htmlspecialchars('ID: '. $item->getId() . ' - Sum: ' .$item->getAmount() .' * '. ($data['price_special'] > 0 ? $data['price_special'] : $data['price']) . ' = ' . ($item->getAmount() * $data['price_special'] > 0 ? $data['price_special'] : $data['price']) , ENT_QUOTES)
                 ));
         }
 
