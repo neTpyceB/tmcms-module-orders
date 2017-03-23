@@ -1,21 +1,21 @@
 {
-  "name": "neTpyceB/TMCms-module-orders",
+  "name": "devp-eu/tmcms-module-orders",
   "type": "library",
   "description": "Module Orders for TMCms",
-  "keywords": ["module", "orders"],
-  "homepage": "http://devp.lv/",
+  "keywords": ["module", "orders", "tmcms"],
+  "homepage": "http://devp.eu/",
   "license": "proprietary",
   "authors": [
     {
       "name": "Vadims Petrusevs",
-      "email": "info@petrik.lv",
-      "homepage": "http://petrik.lv/",
+      "email": "info@devp.eu",
+      "homepage": "http://devp.eu/",
       "role": "Developer"
     }
   ],
   "autoload": {
-    "psr-0": {
-      "neTpyceB\\TMCms": "src"
+    "psr-4": {
+      "TMCms\\Modules\\Orders\\": "src"
     }
   }
 }
