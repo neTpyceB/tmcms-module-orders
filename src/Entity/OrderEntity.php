@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace TMCms\Modules\Orders\Entity;
 
@@ -32,11 +33,17 @@ use TMCms\Orm\Entity;
  */
 class OrderEntity extends Entity
 {
+    /**
+     * @return false|string
+     */
     public function getDateIssued()
     {
         return date(Settings::getDefaultDateFormat(), $this->getTsIssued());
     }
 
+    /**
+     * Auto-call before any Create or Update
+     */
     protected function beforeSave()
     {
         $this->setTsIssued(NOW);
@@ -44,6 +51,9 @@ class OrderEntity extends Entity
         return $this;
     }
 
+    /**
+     * Auto-call before object is Deleted
+     */
     protected function beforeDelete()
     {
         // Delete all items in that order

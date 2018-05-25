@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace TMCms\Modules\Orders\Entity;
 
@@ -22,9 +23,6 @@ class OrderEntityRepository extends EntityRepository
             ],
             'delivery_date' => [
                 'type' => 'ts'
-            ],
-            'status' => [
-                'type' => 'index'
             ],
             'number' => [
                 'type' => 'varchar'

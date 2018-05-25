@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace TMCms\Modules\Orders;
 
@@ -8,8 +9,6 @@ use TMCms\HTML\BreadCrumbs;
 use TMCms\HTML\Cms\CmsFormHelper;
 use TMCms\HTML\Cms\CmsTableHelper;
 use TMCms\Log\App;
-use TMCms\Modules\Catalogue\Entity\ProductArticulEntityRepository;
-use TMCms\Modules\Clients\Entity\ClientDeliveryEntityRepository;
 use TMCms\Modules\Clients\Entity\ClientEntityRepository;
 use TMCms\Modules\ModuleManager;
 use TMCms\Modules\Orders\Entity\OrderEntity;
@@ -17,11 +16,15 @@ use TMCms\Modules\Orders\Entity\OrderEntityRepository;
 use TMCms\Modules\Orders\Entity\OrderItemEntity;
 use TMCms\Modules\Orders\Entity\OrderItemEntityRepository;
 
-defined('INC') or exit;
+\defined('INC') or exit;
 
 ModuleManager::requireModule('catalogue');
 ModuleManager::requireModule('clients');
 
+/**
+ * Class CmsOrders
+ * @package TMCms\Modules\Orders
+ */
 class CmsOrders
 {
     /** Orders */
@@ -74,27 +77,25 @@ class CmsOrders
             ->addCrumb($order->getNumber());
 
         echo $this->__add_edit_form($order)
-            ->setSubmitButton(__('Update'))
+            ->setButtonSubmit(__('Update'))
             ->setAction('?p=' . P . '&do=_edit&id=' . $order->getId());
 
         echo $this->renderJsforAddEdit();
     }
 
+    /**
+     * @param null|OrderEntity $order
+     *
+     * @return \TMCms\HTML\Cms\CmsForm
+     */
     private function __add_edit_form($order = NULL)
     {
         if (!$order) {
             $order = new OrderEntity();
         }
 
-        $articules = new ProductArticulEntityRepository();
-        $articule_names = $articules->getPairs('title');
-
         $clients = new ClientEntityRepository();
         $clients = $clients->getPairs('company');
-
-        $addresses = new ClientDeliveryEntityRepository();
-        $addresses->setWhereClientId($order->getClientId());
-        $addresses = $addresses->getPairs('address');
 
         // Attach order items for input table
         if ($order->getId()) {
@@ -115,16 +116,9 @@ class CmsOrders
                     'type' => 'date',
                 ],
                 'number' => [],
-                'delivery_id' => [
-                    'title' => 'Delivery address',
-                    'options' => $addresses,
-                ],
                 'delivery_date' => [
                     'title' => 'Delivery Date',
                     'type' => 'date',
-                ],
-                'status' => [
-                    'options' => ModuleOrders::$order_statuses,
                 ],
                 'items' => [
                     'title' => 'Order items',
@@ -132,10 +126,6 @@ class CmsOrders
                     'add' => true,
                     'delete' => true,
                     'fields' => [
-                        'linked_product_id' => [
-                            'title' => 'Linked Articule',
-                            'options' => [0 => ' -- '] + $articule_names,
-                        ],
                         'item_name' => [
                             'title' => 'Name',
                         ],
@@ -157,7 +147,10 @@ class CmsOrders
         ]);
     }
 
-    private function renderJsforAddEdit()
+    /**
+     * @return string
+     */
+    private function renderJsforAddEdit(): string
     {
         ob_start();
 
@@ -171,7 +164,7 @@ class CmsOrders
                     var amount = $('#items_update_' + id + '_item_amount_').val();
                     var price_per_one = $('#items_update_' + id + '_item_price_').val();
 
-                    var tax_rate = <?= VAT_TAX_RATE; // Be sure to have it somewhere, e.g. boot.php file ?>;
+                    var tax_rate = 1.21; // Be sure to have it somewhere, e.g. boot.php file ?>;
                     var total = total_vat = 0;
                     if (amount && price_per_one) {
                         total = (amount * price_per_one).toFixed(2);
@@ -209,9 +202,10 @@ class CmsOrders
         $order->loadDataFromArray($_POST);
         $order->save();
 
+        $items = new OrderItemEntityRepository();
+
         // Items
         if (isset($_POST['items'])) {
-            $items = new OrderItemEntityRepository();
             if (isset($_POST['items']['add'])) {
                 foreach ($_POST['items']['add'] as & $v) {
                     $v['order_id'] = $order->getId();
@@ -221,7 +215,6 @@ class CmsOrders
         }
 
         // Update total sum
-        $items = new OrderItemEntityRepository();
         $items->setWhereOrderId($order->getId());
 
         $sum = 0;
