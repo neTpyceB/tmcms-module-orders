@@ -35,6 +35,9 @@ class CmsOrders
             ->addCrumb(P)
             ->addAction('Add Order', '?p=' . P . '&do=add');
 
+        // Pre-create table
+        new OrderItemEntityRepository();
+
         $orders = new OrderEntityRepository();
         $orders->addOrderByField('ts_issued', true);
 
